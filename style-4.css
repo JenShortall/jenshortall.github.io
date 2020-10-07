@@ -2,7 +2,8 @@
 body {
     font-family: sans-serif;
     padding-left: 20%;
-    padding-right: 20%
+    padding-right: 20%;
+    background-color: #1f364d;
     
  }
   
@@ -12,6 +13,7 @@ h1 {
     margin-bottom: 48px;
     font-weight: normal;
     letter-spacing: 4px;
+    color: white;
    
 }
 
@@ -20,6 +22,7 @@ h2 {
     margin-top: 30px;
     margin-bottom: 4px;
     letter-spacing: 1px;
+    color: deeppink;
    
 }
 
@@ -28,6 +31,7 @@ h3 {
     margin-top: 42px;
     margin-bottom: 4px;
     letter-spacing: 1px;
+    color: lightgreen;
     
 }
 
@@ -35,4 +39,5 @@ p {
     font-size: 18px;
     margin-top: 0;
     line-height: 1.6;
+    color: #81b8cd;
 }
