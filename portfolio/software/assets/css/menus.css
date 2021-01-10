@@ -282,44 +282,44 @@ body { background-color: #eff8f5; font-family: sans-serif }
 }
 
 /* menu links */
-.menu-light ul li a:link,  .menu-light ul li a:visited { color: red }
+.menu-light ul li a:link,  .menu-light ul li a:visited { color: #5ba745 }
 .menu-light ul li a:hover, .menu-light ul li a:active  { color: #222 }
 
 /* cta button */
 .menu-light ul li a.btn-cta:link, 
 .menu-light ul li a.btn-cta:visited {
     background-color: transparent;
-    color: red;
-    border-color:red
+    color: #5ba745;
+    border-color:#5ba745
 }
 
 .menu-light ul li a.btn-cta:hover,
 .menu-light ul li a.btn-cta:active {
-    background-color: red;
+    background-color: #5ba745;
     color: #fff;
-    border-color:red
+    border-color:#5ba745
 }
 
 /* on mobiles only */
-.menu-light.flyout-menu hr { background-color: red; border-color: red } 
+.menu-light.flyout-menu hr { background-color: #5ba745; border-color: #5ba745 } 
 
 .menu-light.flyout-menu h4,
 .menu-light.flyout-menu h5,
 .menu-light.flyout-menu h5 a, 
-.menu-light.flyout-menu p { color: red } 
+.menu-light.flyout-menu p { color: #5ba745 } 
 
 /* colour of hamburger icon bars */
 .menu-light .item-icon .bar1, 
 .menu-light .item-icon .bar2, 
-.menu-light .item-icon .bar3 { background-color: red }	
+.menu-light .item-icon .bar3 { background-color: #5ba745 }	
 
 /* phone number link */
-a[href^=tel] { text-decoration: none; color: red }
+a[href^=tel] { text-decoration: none; color: #5ba745 }
 
 /* email link */
 .menu-light.flyout-menu h5 a:link, 
 .menu-light.flyout-menu h5 a:visited {
-    border-bottom-color:red;
+    border-bottom-color:#5ba745;
 }
 
 .menu-light.flyout-menu h5 a:hover, 
@@ -328,10 +328,10 @@ a[href^=tel] { text-decoration: none; color: red }
 }
 
 /* profile image border colour */
-.menu-light.flyout-menu div.fly-out-profile-box img { border-color: red }
+.menu-light.flyout-menu div.fly-out-profile-box img { border-color: #5ba745 }
 
 /* contact icons */
-.menu-light.flyout-menu .fly-out-social-icons a i { color:red }
+.menu-light.flyout-menu .fly-out-social-icons a i { color:#5ba745 }
 
 /* === End light background menu === */
 
@@ -341,7 +341,7 @@ a[href^=tel] { text-decoration: none; color: red }
 
 /* background colour */
 .menu-dark { 
-	background-color: red; 
+	background-color: #5ba745; 
 	transition: all .5s ease-in-out
 }
 
@@ -352,7 +352,7 @@ a[href^=tel] { text-decoration: none; color: red }
 /* cta button */
 .menu-dark ul li a.btn-cta:link,
 .menu-dark ul li a.btn-cta:visited { 
-    background-color: red;
+    background-color: #5ba745;
     color: #fff;
     border-color:#fff
 }
@@ -360,7 +360,7 @@ a[href^=tel] { text-decoration: none; color: red }
 .menu-dark ul li a.btn-cta:hover,
 .menu-dark ul li a.btn-cta:active { 
     background-color: #fff;
-    color: red;
+    color: #5ba745;
     border-color:#fff
 }
 
@@ -388,11 +388,11 @@ a[href^=tel] { text-decoration: none; color: #fff }
 
 .menu-dark.flyout-menu h5 a:hover, 
 .menu-dark.flyout-menu h5 a:active {
-    border-bottom-color: red;
+    border-bottom-color: #5ba745;
 }
 
 /* profile image border colour */
-.menu-dark.flyout-menu div.fly-out-profile-box img { border-color: red }
+.menu-dark.flyout-menu div.fly-out-profile-box img { border-color: #5ba745 }
 
 /* contact icons */
 .menu-dark.flyout-menu .fly-out-social-icons a i { color:#fff }
@@ -416,16 +416,16 @@ a[href^=tel] { text-decoration: none; color: #fff }
 /* cta button */
 .menu-transparent ul li a.btn-cta:link,
 .menu-transparent ul li a.btn-cta:visited { 
-    background-color: red;
+    background-color: #5ba745;
     color: #fff;
-    border-color:red;
+    border-color:#5ba745;
 }
 
 .menu-transparent ul li a.btn-cta:hover,
 .menu-transparent ul li a.btn-cta:active { 
     background-color: #fff;
-    color: red;
-    border-color:red
+    color: #5ba745;
+    border-color:#5ba745
 }
 
 /* on mobiles only - various content */
@@ -439,7 +439,7 @@ a[href^=tel] { text-decoration: none; color: #fff }
 /* colour of hamburger icon bars */
 .menu-transparent .item-icon .bar1, 
 .menu-transparent .item-icon .bar2, 
-.menu-transparent .item-icon .bar3 { background-color: red }
+.menu-transparent .item-icon .bar3 { background-color: #5ba745 }
 
 /* phone number link */
 a[href^=tel] { text-decoration: none; color: #fff }
@@ -452,11 +452,11 @@ a[href^=tel] { text-decoration: none; color: #fff }
 
 .menu-transparent.flyout-menu h5 a:hover, 
 .menu-transparent.flyout-menu h5 a:active {
-    border-bottom-color: red;
+    border-bottom-color: #5ba745;
 }
 
 /* profile image border colour */
-.menu-transparent.flyout-menu div.fly-out-profile-box img { border-color: red }
+.menu-transparent.flyout-menu div.fly-out-profile-box img { border-color: #5ba745 }
 
 /* contact icons */
 .menu-transparent.flyout-menu .fly-out-social-icons a i { color:#fff }

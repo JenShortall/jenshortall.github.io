@@ -22,25 +22,26 @@
 
 <body>
        
+       
     <!-- Begin desktop menu -->
-    <div class="container-menu-desktop menu-light menu-sticky">
+    <div class="container-menu-desktop menu-dark menu-sticky">
         <!-- first child item -->
-        <a href="index.html"><img src="menus-logo.png" alt="website logo"></a>
+        <a href="#"><img src="assets/img/software-logo.png" alt="website logo"></a>  
         <!-- second child item -->
         <ul>
-            <li><a href="#">Option 1</a></li>
-            <li><a href="#">Option 2</a></li>
-            <li><a href="#">Option 3</a></li>
-            <li><a href="#" class="btn-cta"><i class="fas fa-shopping-cart"></i> CTA Button</a></li>
-        </ul>
+			<li><a href="#features">Features</a></li>
+			<li><a href="#benefits">Benefits</a></li>
+			<li><a href="#testimonials">Testimonials</a></li>
+			<li><a href="#free-trial" class="btn-cta">Start Your Free Trial</a></li>  
+		  </ul>
     </div>
     <!-- End desktop menu -->
 
 
     <!-- Begin mobile menu bar -->
-    <div class="container-menu-bar-mobile menu-light menu-sticky">
+    <div class="container-menu-bar-mobile menu-dark menu-sticky">
             <!-- first child -->
-            <a href="index.html"><img src="menus-logo.png" alt="website logo"></a>
+            <a href="#"><img src="assets/img/software-logo.png" alt="website logo"></a>  
             <!-- second child -->
             <div class="item-icon">
                 <div class="bar1"></div>
@@ -51,26 +52,23 @@
     <!-- End mobile menu bar -->
 
     <!-- Begin mobile menu slide-out options -->
-    <div class="flyout-menu flyout-menu-is-closed menu-light">
+    <div class="flyout-menu flyout-menu-is-closed menu-dark">
         <ul>
-            <li><a href="#">Option 1</a></li>
-            <li><a href="#">Option 2</a></li>
-            <li><a href="#">Option 3</a></li>
-            <li><a href="#" class="btn-cta"><i class="fas fa-shopping-cart"></i> CTA Button</a></li>
-        </ul>
+			<li><a href="#features">Features</a></li>
+			<li><a href="#benefits">Benefits</a></li>
+			<li><a href="#testimonials">Testimonials</a></li>
+			<li><a href="#free-trial" class="btn-cta">Free Trial</a></li>  
+		  </ul>
 
         <hr>
         <h4>About Me</h4>
         <div class="fly-out-profile-box">
-            <img src="face-webdev.jpg">
+            <img src="assets/img/profile-pic.jpg" alt="Jennifer Shortall, Web Designer"> 
             <p>Hi, I'm <b>Jennifer Shortall</b>, a web and digital designer based in Dublin, Ireland.</p>
         </div>
    
         <h4>Contact</h4>
         <p>Have a project you'd like to discuss? Let's make something great together!</p>
-
-
-        <h5><a href="jenshortall@gmail.com" target="_blank">jenshortall@gmail.com</a></h5>
 
         <h4>Social Links</h4>
         <div class="fly-out-social-icons">
@@ -80,9 +78,13 @@
             <a href="https://www.instagram.com/jenredefiant/" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.facebook.com/jenny.s.161/" target="_blank"><i class="fab fa-facebook-square"></i></a>
         </div>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+    </div>
     <!-- End mobile menu slide-out options -->
 
-
+    
 	<!-- Begin hero block -->
 	<header class="container-flexbox">
 		<div class="item-col-2">
@@ -104,7 +106,7 @@
 	</section><!-- End parent flexbox container -->
 
 	<!-- Parent flexbox container for one column layout (.item-col-1) on all screens -->
-	<section class="container-flexbox bg-light-gray .no-padding-bottom">
+	<section class="container-flexbox bg-light-gray .no-padding-bottom" id="features">
 		<div class="item-col-1">
 			<h2>What we offer</h2>
 			<p>Say 'Hello' to a simple yet powerful user analytics system. IBAT Analytics tells you all you need to know about your website traffic, without tracking or storing your visitors' personal information. </p>
@@ -137,7 +139,7 @@
 
 		
 	<!-- Parent flexbox container for one column layout (.item-col-1) on all screens -->
-	<section class="container-flexbox bg-light-gray .no-padding-bottom">
+	<section class="container-flexbox bg-light-gray .no-padding-bottom" id="benefits">
 		<div class="item-col-1">
 			<h2>How you benefit</h2>
 			<p>IBAT Analytics helps you focus on what's important: your business.</p>
@@ -179,7 +181,7 @@
 
 	
 	<!-- Begin parent flexbox container for one column layout (.item-col-1) on all screens -->
-	<section class="container-flexbox bg-light-gray .no-padding-bottom">
+	<section class="container-flexbox bg-light-gray .no-padding-bottom" id="testimonials">
 		<div class="item-col-1">
 			<h2>Happy users</h2>
 			<p>Join the 1,000s of delighted customers from every sector of business around the world who are using IBAT Analytics to drive their future success.</p>
@@ -253,9 +255,9 @@
         <h5>Excellence in digital creation</h5>
 
         <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="portfolio/index.html">Portfolio</a></li>
-            <li><a href="contact/index.html">Contact</a></li>
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="../index.html">Portfolio</a></li>
+            <li><a href="../../contact/index.html">Contact</a></li>
         </ul>
         
         <ul class="footer-icons">
@@ -291,7 +293,7 @@
             
          </ul>                
         
-        <a class="privacy-legal" href="privacy.html">Privacy & Legal</a>
+        <a class="privacy-legal" href="../../privacy.html">Privacy & Legal</a>
     </div>
 	
 	<!-- End HTML footer -->
@@ -365,7 +367,7 @@
         }
 
 		// Code for menus with transparent background
-		//window.onscroll = function() {swapMenuStyle()};
+		window.onscroll = function() {swapMenuStyle()};
 		const headerDesktop = document.querySelector('.container-menu-desktop');
 		const headerMobile = document.querySelector('.container-menu-bar-mobile');
 
@@ -375,14 +377,14 @@
 		function swapMenuStyle() {
 			if (window.pageYOffset > stickyDesktop) {
 				headerDesktop.classList.add("menu-light","menu-drop-shadow");
-				headerDesktop.classList.remove("menu-transparent");
+				headerDesktop.classList.remove("menu-dark");
 				headerMobile.classList.add("menu-light","menu-drop-shadow");
-				headerMobile.classList.remove("menu-transparent");
+				headerMobile.classList.remove("menu-dark");
 
 			} else {
-				headerDesktop.classList.add("menu-transparent");
+				headerDesktop.classList.add("menu-dark");
 				headerDesktop.classList.remove("menu-light","menu-drop-shadow");
-				headerMobile.classList.add("menu-transparent");
+				headerMobile.classList.add("menu-dark");
 				headerMobile.classList.remove("menu-light","menu-drop-shadow");
 			}
 		}
