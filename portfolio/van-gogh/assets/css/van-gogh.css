@@ -60,7 +60,7 @@ img { width: 100%; height: auto; display: block }
 
 /* website logo fixed size in desktop menu and mobile menu bar  */
 .container-menu-desktop    a:first-child img,
-.container-menu-bar-mobile a:first-child img { width: 200px; height: 40px }
+.container-menu-bar-mobile a:first-child img { width: 46px; height: 40px }
 
 /* website logo vertically cente#3434b0 in desktop menu and mobile menu bar  */
 .container-menu-desktop    a:first-child,
