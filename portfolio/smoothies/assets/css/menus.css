@@ -1,3 +1,17 @@
+/*  ============= WEB BROWSER RESETS ============ */
+* { margin: 0; padding: 0; border: none; box-sizing: border-box }
+html { height: 100% }
+body { min-height: 100%; max-width: 1600px; margin-left: auto; margin-right: auto }  
+img { width: 100%; height: auto; display: block }
+html { scroll-behavior: smooth }
+
+body { background-color: #eff8f5; font-family: sans-serif }
+
+
+/* *****************************************************************
+====================== MENU STYLES TO COPY AND PASTE ===============
+********************************************************************* */
+
 /* Begin menu styles */
 
 .unhide-content-under-menu { padding-top: 72px }
@@ -7,8 +21,8 @@
 /* Positions all menus in front of page content */
 .container-menu-desktop, 
 .container-menu-bar-mobile, 
-.flyout-menu { z-index: 999; font-family: sans-serif; }
-.container-menu-desktop, .container-menu-bar-mobile { width:100%; font-family: sans-serif; }
+.flyout-menu { z-index: 999 }
+.container-menu-desktop, .container-menu-bar-mobile { width:100% }
 
 /* on mobiles - hide desktop menu */
 @media all and (max-width:767px) { 
@@ -275,7 +289,7 @@
 .menu-light ul li a.btn-cta:link, 
 .menu-light ul li a.btn-cta:visited {
     background-color: transparent;
-    color: r#d1274b;
+    color: #d1274b;
     border-color:#d1274b
 }
 
@@ -378,7 +392,7 @@ a[href^=tel] { text-decoration: none; color: #fff }
 }
 
 /* profile image border colour */
-.menu-dark.flyout-menu div.fly-out-profile-box img { border-color: red }
+.menu-dark.flyout-menu div.fly-out-profile-box img { border-color: #d1274b }
 
 /* contact icons */
 .menu-dark.flyout-menu .fly-out-social-icons a i { color:#fff }
@@ -402,7 +416,7 @@ a[href^=tel] { text-decoration: none; color: #fff }
 /* cta button */
 .menu-transparent ul li a.btn-cta:link,
 .menu-transparent ul li a.btn-cta:visited { 
-    background-color:  #d1274b;
+    background-color: #d1274b;
     color: #fff;
     border-color:#d1274b;
 }
@@ -425,7 +439,7 @@ a[href^=tel] { text-decoration: none; color: #fff }
 /* colour of hamburger icon bars */
 .menu-transparent .item-icon .bar1, 
 .menu-transparent .item-icon .bar2, 
-.menu-transparent .item-icon .bar3 { background-color: #d1274b }
+.menu-transparent .item-icon .bar3 { background-color: #fff }
 
 /* phone number link */
 a[href^=tel] { text-decoration: none; color: #fff }
