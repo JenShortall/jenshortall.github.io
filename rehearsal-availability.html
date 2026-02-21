@@ -15,147 +15,67 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
-
   header {
     background: var(--ink); padding: 2rem 2rem 1.6rem;
     text-align: center; position: relative; overflow: hidden;
   }
-  header::before {
-    content: ''; position: absolute; inset: 0;
-    background: repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,255,255,0.018) 20px,rgba(255,255,255,0.018) 21px);
-  }
-  header::after {
-    content: '♩ ♪ ♫ ♬ ♩ ♪ ♫ ♬ ♩ ♪ ♫ ♬';
-    position: absolute; bottom: 0.3rem; left: 0; right: 0;
-    text-align: center; font-size: 1rem;
-    color: rgba(255,255,255,0.055); letter-spacing: 0.5rem; pointer-events: none;
-  }
-  header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.5rem, 4vw, 2.4rem);
-    color: var(--paper); font-weight: 900; letter-spacing: -0.02em; position: relative;
-  }
-  header p { color: rgba(255,255,255,0.48); margin-top: 0.3rem; font-size: 0.88rem; font-weight: 300; position: relative; }
-  .wedding-countdown {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: var(--wedding); color: white; border-radius: 20px;
-    padding: 0.3rem 1rem; font-size: 0.82rem; font-weight: 600;
-    margin-top: 0.7rem; position: relative; letter-spacing: 0.02em;
-  }
-
-  .page { padding: 1.4rem; max-width: 900px; margin: 0 auto; }
-
-  .singer-entry {
-    background: white; border: 1.5px solid var(--border);
-    border-radius: 12px; padding: 1.5rem; margin-bottom: 1.4rem;
-  }
-  .singer-entry h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 0.3rem; }
-  .singer-entry p { color: var(--muted); font-size: 0.84rem; margin-bottom: 1rem; }
-  .name-row { display: flex; gap: 0.7rem; align-items: center; flex-wrap: wrap; }
-  .name-row input {
-    flex: 1; min-width: 120px; padding: 0.65rem 0.9rem;
-    border: 1.5px solid var(--border); border-radius: 8px;
-    font-family: 'DM Sans', sans-serif; font-size: 0.94rem;
-    background: var(--paper); color: var(--ink); outline: none; transition: border-color 0.2s;
-  }
-  .name-row input:focus { border-color: var(--accent); }
-  .btn {
-    padding: 0.65rem 1.3rem; border: none; border-radius: 8px; cursor: pointer;
-    font-family: 'DM Sans', sans-serif; font-size: 0.87rem; font-weight: 600;
-    transition: all 0.15s; white-space: nowrap;
-  }
-  .btn-primary { background: var(--accent); color: white; }
-  .btn-primary:hover { background: #b04830; transform: translateY(-1px); }
-
-  .save-status { font-size: 0.74rem; color: var(--sage); font-style: italic; margin-top: 0.4rem; min-height: 1em; }
-
-  .singer-banner {
-    display: none; align-items: center; gap: 0.8rem;
-    background: var(--sage-light); border: 1.5px solid var(--sage);
-    border-radius: 10px; padding: 0.75rem 1rem; margin-bottom: 1.1rem; flex-wrap: wrap;
-  }
-  .singer-banner.visible { display: flex; }
-  .singer-banner .name-badge {
-    background: var(--sage); color: white; border-radius: 20px;
-    padding: 0.2rem 0.85rem; font-weight: 600; font-size: 0.86rem;
-  }
-  .singer-banner p { color: #3a5c3f; font-size: 0.83rem; flex: 1; min-width: 140px; }
-  .singer-banner .change-link {
-    color: var(--sage); cursor: pointer; font-size: 0.8rem; font-weight: 600; text-decoration: underline;
-  }
-
-  .instructions {
-    background: #fff8f0; border-left: 4px solid var(--gold);
-    border-radius: 0 8px 8px 0; padding: 0.75rem 1rem;
-    margin-bottom: 1.1rem; font-size: 0.83rem; color: #6b5a2a; line-height: 1.6;
-  }
-
-  .week-nav { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; flex-wrap: wrap; }
-  .week-pills { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-  .week-pill {
-    padding: 0.35rem 0.9rem; border-radius: 20px; border: 1.5px solid var(--border);
-    background: white; font-size: 0.8rem; font-weight: 500; color: var(--muted);
-    cursor: pointer; transition: all 0.15s; white-space: nowrap;
-  }
-  .week-pill:hover { border-color: var(--accent); color: var(--ink); }
-  .week-pill.active { background: var(--accent); border-color: var(--accent); color: white; font-weight: 600; }
-  .week-arrow {
-    width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--border);
-    background: white; display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 1rem; color: var(--muted); transition: all 0.15s; flex-shrink: 0;
-  }
-  .week-arrow:hover { border-color: var(--accent); color: var(--accent); }
-  .week-arrow.disabled { opacity: 0.3; pointer-events: none; }
-
-  .week-grid { background: white; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; }
-  .week-row { display: grid; grid-template-columns: repeat(7, 1fr); }
-  .week-header-row { background: var(--ink); }
-  .week-header-cell {
-    display: flex; flex-direction: column; align-items: center;
-    padding: 0.4rem 0.2rem 0.35rem; gap: 1px;
-  }
-  .week-header-cell .hdr-day { font-size: 0.68rem; opacity: 0.6; letter-spacing: 0.05em; text-transform: uppercase; color: white; }
-  .week-header-cell .hdr-date { font-size: 0.88rem; font-weight: 700; color: white; }
-  .week-header-cell.is-weekend .hdr-day { opacity: 0.3; }
-  .week-header-cell.is-weekend .hdr-date { color: rgba(255,255,255,0.4); }
-
-  .day-cell {
-    border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    padding: 0.35rem 0.3rem 0.3rem; position: relative; min-width: 0; background: white;
-  }
-  .week-row:last-child .day-cell { border-bottom: none; }
-  .day-cell:last-child { border-right: none; }
-  .day-cell.is-weekend { background: #fdfaf7; }
-  .day-cell.is-empty { background: var(--cream); opacity: 0.3; }
-  .day-cell.is-wedding { background: var(--wedding-light); border-color: #d0aae8; }
-
-  .slots { display: flex; flex-direction: column; gap: 2px; }
-  .slot-btn {
-    display: flex; align-items: center; gap: 3px; padding: 2px 4px; border-radius: 4px;
-    border: 1px solid transparent; cursor: pointer; background: var(--cream);
-    font-family: 'DM Sans', sans-serif; font-size: 0.6rem; font-weight: 500; color: var(--muted);
-    line-height: 1.2; text-align: left; width: 100%; transition: all 0.12s;
-    user-select: none; white-space: nowrap; overflow: hidden;
-  }
-  .slot-btn:hover:not(:disabled) { border-color: var(--border); color: var(--ink); }
-  .slot-btn.blocked { background: var(--accent-light); border-color: #e8b0a0; color: var(--accent); font-weight: 600; }
-  .slot-btn:disabled { cursor: default; }
-  .slot-icon { font-size: 0.68rem; flex-shrink: 0; }
-
-  .wedding-cell-inner {
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: center; text-align: center; padding: 0.5rem 0.2rem; gap: 3px; min-height: 80px;
-  }
-  .wedding-emoji { font-size: 1.4rem; }
-  .wedding-label { font-family: 'Playfair Display', serif; font-size: 0.72rem; font-weight: 700; color: var(--wedding); letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.2; }
-  .wedding-date { font-size: 0.62rem; color: var(--wedding); opacity: 0.7; }
-
-  @media (max-width: 600px) {
-    .page { padding: 0.7rem; }
-    .slot-btn { font-size: 0.52rem; padding: 1px 2px; }
-    .slot-icon { display: none; }
-    .week-pill { padding: 0.28rem 0.65rem; font-size: 0.74rem; }
-  }
+  header::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,255,255,0.018) 20px,rgba(255,255,255,0.018) 21px); }
+  header::after { content:'♩ ♪ ♫ ♬ ♩ ♪ ♫ ♬ ♩ ♪ ♫ ♬'; position:absolute; bottom:0.3rem; left:0; right:0; text-align:center; font-size:1rem; color:rgba(255,255,255,0.055); letter-spacing:0.5rem; pointer-events:none; }
+  header h1 { font-family:'Playfair Display',serif; font-size:clamp(1.5rem,4vw,2.4rem); color:var(--paper); font-weight:900; letter-spacing:-0.02em; position:relative; }
+  header p { color:rgba(255,255,255,0.48); margin-top:0.3rem; font-size:0.88rem; font-weight:300; position:relative; }
+  .wedding-countdown { display:inline-flex; align-items:center; gap:0.5rem; background:var(--wedding); color:white; border-radius:20px; padding:0.3rem 1rem; font-size:0.82rem; font-weight:600; margin-top:0.7rem; position:relative; }
+  .page { padding:1.4rem; max-width:900px; margin:0 auto; }
+  .singer-entry { background:white; border:1.5px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:1.4rem; }
+  .singer-entry h2 { font-family:'Playfair Display',serif; font-size:1.2rem; margin-bottom:0.3rem; }
+  .singer-entry p { color:var(--muted); font-size:0.84rem; margin-bottom:1rem; }
+  .name-row { display:flex; gap:0.7rem; align-items:center; flex-wrap:wrap; }
+  .name-row input { flex:1; min-width:120px; padding:0.65rem 0.9rem; border:1.5px solid var(--border); border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.94rem; background:var(--paper); color:var(--ink); outline:none; transition:border-color 0.2s; }
+  .name-row input:focus { border-color:var(--accent); }
+  .btn { padding:0.65rem 1.3rem; border:none; border-radius:8px; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.87rem; font-weight:600; transition:all 0.15s; white-space:nowrap; }
+  .btn-primary { background:var(--accent); color:white; }
+  .btn-primary:hover { background:#b04830; transform:translateY(-1px); }
+  .save-status { font-size:0.74rem; color:var(--sage); font-style:italic; margin-top:0.4rem; min-height:1em; }
+  .singer-banner { display:none; align-items:center; gap:0.8rem; background:var(--sage-light); border:1.5px solid var(--sage); border-radius:10px; padding:0.75rem 1rem; margin-bottom:1.1rem; flex-wrap:wrap; }
+  .singer-banner.visible { display:flex; }
+  .singer-banner .name-badge { background:var(--sage); color:white; border-radius:20px; padding:0.2rem 0.85rem; font-weight:600; font-size:0.86rem; }
+  .singer-banner p { color:#3a5c3f; font-size:0.83rem; flex:1; min-width:140px; }
+  .singer-banner .change-link { color:var(--sage); cursor:pointer; font-size:0.8rem; font-weight:600; text-decoration:underline; }
+  .instructions { background:#fff8f0; border-left:4px solid var(--gold); border-radius:0 8px 8px 0; padding:0.75rem 1rem; margin-bottom:1.1rem; font-size:0.83rem; color:#6b5a2a; line-height:1.6; }
+  .week-nav { display:flex; align-items:center; gap:0.6rem; margin-bottom:1rem; flex-wrap:wrap; }
+  .week-pills { display:flex; gap:0.4rem; flex-wrap:wrap; }
+  .week-pill { padding:0.35rem 0.9rem; border-radius:20px; border:1.5px solid var(--border); background:white; font-size:0.8rem; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+  .week-pill:hover { border-color:var(--accent); color:var(--ink); }
+  .week-pill.active { background:var(--accent); border-color:var(--accent); color:white; font-weight:600; }
+  .week-arrow { width:32px; height:32px; border-radius:50%; border:1.5px solid var(--border); background:white; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1rem; color:var(--muted); transition:all 0.15s; flex-shrink:0; }
+  .week-arrow:hover { border-color:var(--accent); color:var(--accent); }
+  .week-arrow.disabled { opacity:0.3; pointer-events:none; }
+  .week-grid { background:white; border:1.5px solid var(--border); border-radius:12px; overflow:hidden; }
+  .week-row { display:grid; grid-template-columns:repeat(7,1fr); }
+  .week-header-row { background:var(--ink); }
+  .week-header-cell { display:flex; flex-direction:column; align-items:center; padding:0.4rem 0.2rem 0.35rem; gap:1px; }
+  .week-header-cell .hdr-day { font-size:0.68rem; opacity:0.6; letter-spacing:0.05em; text-transform:uppercase; color:white; }
+  .week-header-cell .hdr-date { font-size:0.88rem; font-weight:700; color:white; }
+  .week-header-cell.is-weekend .hdr-day { opacity:0.3; }
+  .week-header-cell.is-weekend .hdr-date { color:rgba(255,255,255,0.4); }
+  .day-cell { border-right:1px solid var(--border); border-bottom:1px solid var(--border); padding:0.35rem 0.3rem 0.3rem; position:relative; min-width:0; background:white; }
+  .week-row:last-child .day-cell { border-bottom:none; }
+  .day-cell:last-child { border-right:none; }
+  .day-cell.is-weekend { background:#fdfaf7; }
+  .day-cell.is-empty { background:var(--cream); opacity:0.3; }
+  .day-cell.is-wedding { background:var(--wedding-light); border-color:#d0aae8; }
+  .slots { display:flex; flex-direction:column; gap:2px; }
+  .slot-btn { display:flex; align-items:center; gap:3px; padding:2px 4px; border-radius:4px; border:1px solid transparent; cursor:pointer; background:var(--cream); font-family:'DM Sans',sans-serif; font-size:0.6rem; font-weight:500; color:var(--muted); line-height:1.2; text-align:left; width:100%; transition:all 0.12s; user-select:none; white-space:nowrap; overflow:hidden; }
+  .slot-btn:hover:not(:disabled) { border-color:var(--border); color:var(--ink); }
+  .slot-btn.blocked { background:var(--accent-light); border-color:#e8b0a0; color:var(--accent); font-weight:600; }
+  .slot-btn:disabled { cursor:default; }
+  .slot-icon { font-size:0.68rem; flex-shrink:0; }
+  .wedding-cell-inner { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0.5rem 0.2rem; gap:3px; min-height:80px; }
+  .wedding-emoji { font-size:1.4rem; }
+  .wedding-label { font-family:'Playfair Display',serif; font-size:0.72rem; font-weight:700; color:var(--wedding); letter-spacing:0.04em; text-transform:uppercase; line-height:1.2; }
+  .wedding-date { font-size:0.62rem; color:var(--wedding); opacity:0.7; }
+  .loading { text-align:center; padding:2rem; color:var(--muted); font-size:0.9rem; }
+  .error-box { background:#fde8e4; border:1.5px solid #e8b0a0; border-radius:10px; padding:1rem 1.2rem; margin-bottom:1rem; font-size:0.85rem; color:#8b2a14; }
+  @media(max-width:600px) { .page{padding:0.7rem;} .slot-btn{font-size:0.52rem;padding:1px 2px;} .slot-icon{display:none;} .week-pill{padding:0.28rem 0.65rem;font-size:0.74rem;} }
 </style>
 </head>
 <body>
@@ -167,7 +87,6 @@
 </header>
 
 <div class="page">
-
   <div class="singer-entry" id="name-entry-box">
     <h2>Who are you?</h2>
     <p>Enter your name and Eircode so we can plan rehearsals around everyone's location and availability.</p>
@@ -193,164 +112,152 @@
     <strong>How to use:</strong> Each day has three slots — <strong>🌅 Morning</strong> (before noon), <strong>☀️ Afternoon</strong> (12–5pm), <strong>🌙 Evening</strong> (5pm+). Click any slot you <strong>cannot</strong> attend to turn it red. Click again to clear. Changes save automatically.
   </div>
 
-  <div id="singer-week-ui"></div>
+  <div id="singer-week-ui"><div class="loading">Loading…</div></div>
 </div>
 
-<script>
+<script type="module">
+import { initializeApp }         from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+// ── PASTE YOUR FIREBASE CONFIG OBJECT HERE (copy from Firebase Console) ───────
+const firebaseConfig = {
+  apiKey: "AIzaSyCerpfgRkMQggYcx2bWdrYJ1DlZ-C83kMU",
+  authDomain: "rehearsal-calendar-adba7.firebaseapp.com",
+  projectId: "rehearsal-calendar-adba7",
+  storageBucket: "rehearsal-calendar-adba7.firebasestorage.app",
+  messagingSenderId: "505359169564",
+  appId: "1:505359169564:web:5d991b121c0d03a467c7d9"
+};
+// ─────────────────────────────────────────────────────────────────────────────
+
+const app    = initializeApp(firebaseConfig);
+const db     = getFirestore(app);
+const DOCREF = doc(db, 'choir', 'availability');
+
 const WEEKS = [
-  { dates: makeDateRange('2026-03-02', '2026-03-08') },
-  { dates: makeDateRange('2026-03-09', '2026-03-15') },
-  { dates: makeDateRange('2026-03-16', '2026-03-22') },
-  { dates: makeDateRange('2026-03-23', '2026-03-29') },
-  { dates: makeDateRange('2026-03-30', '2026-04-05') },
+  { dates: range('2026-03-02','2026-03-08') },
+  { dates: range('2026-03-09','2026-03-15') },
+  { dates: range('2026-03-16','2026-03-22') },
+  { dates: range('2026-03-23','2026-03-29') },
+  { dates: range('2026-03-30','2026-04-05') },
 ];
-const RANGE_START  = '2026-03-02';
-const RANGE_END    = '2026-04-02';
-const WEDDING_DATE = '2026-04-03';
-const SLOTS        = ['m','a','e'];
-const SLOT_LABELS  = { m:'Morning', a:'Afternoon', e:'Evening' };
-const SLOT_ICONS   = { m:'🌅', a:'☀️', e:'🌙' };
-const DAY_SHORT    = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const MONTH_SHORT  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const STORAGE_KEY  = 'choir-wedding-2026-v1';
+const R_START = '2026-03-02', R_END = '2026-04-02', WEDDING = '2026-04-03';
+const SLOTS = ['m','a','e'];
+const SLABEL = {m:'Morning',a:'Afternoon',e:'Evening'};
+const SICON  = {m:'🌅',a:'☀️',e:'🌙'};
+const DSHORT = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const MSHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-let currentSinger = null;
-let allData = {};
-let currentWeek = 0;
+let singer = null, allData = {}, week = 0;
 
-function makeDateRange(start, end) {
-  const arr = []; let d = new Date(start + 'T00:00:00');
-  const e = new Date(end + 'T00:00:00');
-  while (d <= e) { arr.push(d.toISOString().slice(0,10)); d.setDate(d.getDate()+1); }
-  return arr;
+function range(s, e) {
+  const a=[], [sy,sm,sd]=s.split('-').map(Number), [ey,em,ed]=e.split('-').map(Number);
+  let d=new Date(Date.UTC(sy,sm-1,sd)), end=new Date(Date.UTC(ey,em-1,ed));
+  while(d<=end){a.push(d.toISOString().slice(0,10));d.setUTCDate(d.getUTCDate()+1);}
+  return a;
 }
-function parseDate(iso) {
-  const [y,m,day] = iso.split('-').map(Number);
-  return new Date(Date.UTC(y, m-1, day));
-}
-function getD(d)   { return d.getUTCDate(); }
-function getMo(d)  { return d.getUTCMonth(); }
-function getDow(d) { return d.getUTCDay(); }
-function isInRange(iso) { return iso >= RANGE_START && iso <= RANGE_END; }
+function pd(iso){const[y,m,d]=iso.split('-').map(Number);return new Date(Date.UTC(y,m-1,d));}
+function gd(d){return d.getUTCDate();} function gm(d){return d.getUTCMonth();} function gw(d){return d.getUTCDay();}
+function inRange(iso){return iso>=R_START&&iso<=R_END;}
 
-async function loadData() {
-  try { const r = await window.storage.get(STORAGE_KEY, true); if (r?.value) allData = JSON.parse(r.value); }
-  catch(e) { allData = {}; }
+async function load() {
+  try { const s=await getDoc(DOCREF); allData=s.exists()?s.data():{};} catch(e){allData={};}
 }
-async function saveData() {
-  try { await window.storage.set(STORAGE_KEY, JSON.stringify(allData), true); flashSave(); }
-  catch(e) { console.error('Save failed', e); }
+async function save() {
+  try { await setDoc(DOCREF,allData); flash(); } catch(e){console.error(e);}
 }
-function flashSave() {
-  const el = document.getElementById('save-status');
-  if (!el) return; el.textContent = '✓ Saved'; setTimeout(() => el.textContent = '', 2000);
-}
+function flash(){const el=document.getElementById('save-status');if(!el)return;el.textContent='✓ Saved';setTimeout(()=>el.textContent='',2000);}
 
-function setName() {
-  const name = document.getElementById('name-input').value.trim();
-  if (!name) { document.getElementById('name-input').focus(); return; }
-  currentSinger = name;
-  if (!allData[name]) allData[name] = {};
-  const ec = document.getElementById('eircode-input').value.trim().toUpperCase();
-  if (ec) allData[name]._eircode = ec;
-  document.getElementById('name-entry-box').style.display = 'none';
-  document.getElementById('instructions').style.display = 'block';
+window.setName=function(){
+  const name=document.getElementById('name-input').value.trim();
+  if(!name){document.getElementById('name-input').focus();return;}
+  singer=name;
+  if(!allData[name])allData[name]={};
+  const ec=document.getElementById('eircode-input').value.trim().toUpperCase();
+  if(ec)allData[name]._eircode=ec;
+  document.getElementById('name-entry-box').style.display='none';
+  document.getElementById('instructions').style.display='block';
   document.getElementById('singer-banner').classList.add('visible');
-  document.getElementById('banner-name').textContent = name;
-  document.getElementById('banner-eircode').textContent = allData[name]._eircode ? `📍 ${allData[name]._eircode}` : '';
-  renderWeek(); saveData();
-}
-function changeName() {
-  currentSinger = null;
-  document.getElementById('name-entry-box').style.display = 'block';
-  document.getElementById('instructions').style.display = 'none';
+  document.getElementById('banner-name').textContent=name;
+  document.getElementById('banner-eircode').textContent=allData[name]._eircode?`📍 ${allData[name]._eircode}`:'';
+  renderWeek();save();
+};
+window.changeName=function(){
+  singer=null;
+  document.getElementById('name-entry-box').style.display='block';
+  document.getElementById('instructions').style.display='none';
   document.getElementById('singer-banner').classList.remove('visible');
-  document.getElementById('name-input').value = '';
-  document.getElementById('eircode-input').value = '';
+  document.getElementById('name-input').value='';
+  document.getElementById('eircode-input').value='';
   document.getElementById('name-input').focus();
   renderWeek();
+};
+
+function buildNav(cur,onSel,cont){
+  const nav=document.createElement('div');nav.className='week-nav';
+  const L=document.createElement('div');L.className='week-arrow'+(cur===0?' disabled':'');L.textContent='←';L.onclick=()=>onSel(cur-1);
+  const pills=document.createElement('div');pills.className='week-pills';
+  WEEKS.forEach((w,i)=>{
+    const p=document.createElement('div');p.className='week-pill'+(i===cur?' active':'');
+    const f=pd(w.dates[0]),l=pd(w.dates[w.dates.length-1]);
+    p.textContent=`${gd(f)} ${MSHORT[gm(f)]}–${gd(l)} ${MSHORT[gm(l)]}`;
+    p.onclick=()=>onSel(i);pills.appendChild(p);
+  });
+  const R=document.createElement('div');R.className='week-arrow'+(cur===WEEKS.length-1?' disabled':'');R.textContent='→';R.onclick=()=>onSel(cur+1);
+  nav.appendChild(L);nav.appendChild(pills);nav.appendChild(R);cont.appendChild(nav);
 }
 
-function buildWeekNav(current, onSelect, container) {
-  const nav = document.createElement('div'); nav.className = 'week-nav';
-  const left = document.createElement('div');
-  left.className = 'week-arrow' + (current === 0 ? ' disabled' : '');
-  left.textContent = '←'; left.onclick = () => onSelect(current - 1);
-  const pills = document.createElement('div'); pills.className = 'week-pills';
-  WEEKS.forEach((w, i) => {
-    const pill = document.createElement('div');
-    pill.className = 'week-pill' + (i === current ? ' active' : '');
-    const first = parseDate(w.dates[0]); const last = parseDate(w.dates[w.dates.length-1]);
-    pill.textContent = `${getD(first)} ${MONTH_SHORT[getMo(first)]}–${getD(last)} ${MONTH_SHORT[getMo(last)]}`;
-    pill.onclick = () => onSelect(i); pills.appendChild(pill);
+function buildGrid(wi,cellFn){
+  const wk=WEEKS[wi],wrap=document.createElement('div');wrap.className='week-grid';
+  const hr=document.createElement('div');hr.className='week-row week-header-row';
+  wk.dates.forEach(iso=>{
+    const d=pd(iso),dow=gw(d),we=dow===0||dow===6,di=(dow+6)%7;
+    const h=document.createElement('div');h.className='week-header-cell'+(we?' is-weekend':'');
+    h.innerHTML=`<span class="hdr-day">${DSHORT[di]}</span><span class="hdr-date">${gd(d)} ${MSHORT[gm(d)]}</span>`;
+    hr.appendChild(h);
   });
-  const right = document.createElement('div');
-  right.className = 'week-arrow' + (current === WEEKS.length-1 ? ' disabled' : '');
-  right.textContent = '→'; right.onclick = () => onSelect(current + 1);
-  nav.appendChild(left); nav.appendChild(pills); nav.appendChild(right);
-  container.appendChild(nav);
+  wrap.appendChild(hr);
+  const br=document.createElement('div');br.className='week-row';
+  wk.dates.forEach(iso=>{
+    const d=pd(iso),dow=gw(d),we=dow===0||dow===6,isW=iso===WEDDING,oor=!inRange(iso)&&!isW;
+    const cell=document.createElement('div');
+    cell.className='day-cell'+(we?' is-weekend':'')+(isW?' is-wedding':'')+(oor?' is-empty':'');
+    cellFn(cell,iso,isW,oor);br.appendChild(cell);
+  });
+  wrap.appendChild(br);return wrap;
 }
 
-function buildWeekGrid(weekIdx, cellFn) {
-  const week = WEEKS[weekIdx];
-  const wrap = document.createElement('div'); wrap.className = 'week-grid';
-  const hdrRow = document.createElement('div'); hdrRow.className = 'week-row week-header-row';
-  week.dates.forEach(iso => {
-    const d = parseDate(iso); const dow = getDow(d); const isWeekend = dow===0||dow===6;
-    const dayIdx = (dow+6)%7;
-    const hdr = document.createElement('div');
-    hdr.className = 'week-header-cell' + (isWeekend ? ' is-weekend' : '');
-    hdr.innerHTML = `<span class="hdr-day">${DAY_SHORT[dayIdx]}</span><span class="hdr-date">${getD(d)} ${MONTH_SHORT[getMo(d)]}</span>`;
-    hdrRow.appendChild(hdr);
-  });
-  wrap.appendChild(hdrRow);
-  const bodyRow = document.createElement('div'); bodyRow.className = 'week-row';
-  week.dates.forEach(iso => {
-    const d = parseDate(iso); const dow = getDow(d);
-    const isWeekend = dow===0||dow===6;
-    const isWedding = iso===WEDDING_DATE;
-    const outOfRange = !isInRange(iso) && !isWedding;
-    const cell = document.createElement('div');
-    cell.className = 'day-cell' + (isWeekend?' is-weekend':'') + (isWedding?' is-wedding':'') + (outOfRange?' is-empty':'');
-    cellFn(cell, iso, isWedding, outOfRange);
-    bodyRow.appendChild(cell);
-  });
-  wrap.appendChild(bodyRow);
-  return wrap;
-}
-
-function renderWeek() {
-  const container = document.getElementById('singer-week-ui'); container.innerHTML = '';
-  const blocked = currentSinger ? (allData[currentSinger] || {}) : {};
-  buildWeekNav(currentWeek, (i) => { currentWeek = i; renderWeek(); }, container);
-  const grid = buildWeekGrid(currentWeek, (cell, iso, isWedding, outOfRange) => {
-    if (isWedding) { cell.innerHTML = `<div class="wedding-cell-inner"><span class="wedding-emoji">💍</span><span class="wedding-label">The Wedding!</span><span class="wedding-date">Thu 3 Apr</span></div>`; return; }
-    if (outOfRange) return;
-    const slotsEl = document.createElement('div'); slotsEl.className = 'slots';
-    SLOTS.forEach(s => {
-      const key = `${iso}-${s}`; const isBlocked = !!blocked[key];
-      const btn = document.createElement('button');
-      btn.className = 'slot-btn' + (isBlocked ? ' blocked' : '');
-      btn.innerHTML = `<span class="slot-icon">${SLOT_ICONS[s]}</span>${SLOT_LABELS[s]}`;
-      if (currentSinger) btn.onclick = () => toggleSlot(iso, s);
-      else btn.disabled = true;
-      slotsEl.appendChild(btn);
+function renderWeek(){
+  const cont=document.getElementById('singer-week-ui');cont.innerHTML='';
+  const blocked=singer?(allData[singer]||{}):{};
+  buildNav(week,i=>{week=i;renderWeek();},cont);
+  const grid=buildGrid(week,(cell,iso,isW,oor)=>{
+    if(isW){cell.innerHTML=`<div class="wedding-cell-inner"><span class="wedding-emoji">💍</span><span class="wedding-label">The Wedding!</span><span class="wedding-date">Thu 3 Apr</span></div>`;return;}
+    if(oor)return;
+    const sl=document.createElement('div');sl.className='slots';
+    SLOTS.forEach(s=>{
+      const key=`${iso}-${s}`,isB=!!blocked[key];
+      const btn=document.createElement('button');
+      btn.className='slot-btn'+(isB?' blocked':'');
+      btn.innerHTML=`<span class="slot-icon">${SICON[s]}</span>${SLABEL[s]}`;
+      if(singer)btn.onclick=()=>toggle(iso,s);else btn.disabled=true;
+      sl.appendChild(btn);
     });
-    cell.appendChild(slotsEl);
+    cell.appendChild(sl);
   });
-  container.appendChild(grid);
+  cont.appendChild(grid);
 }
 
-function toggleSlot(iso, slot) {
-  if (!currentSinger) return;
-  if (!allData[currentSinger]) allData[currentSinger] = {};
-  const key = `${iso}-${slot}`;
-  if (allData[currentSinger][key]) delete allData[currentSinger][key];
-  else allData[currentSinger][key] = true;
-  saveData(); renderWeek();
+function toggle(iso,slot){
+  if(!singer)return;
+  if(!allData[singer])allData[singer]={};
+  const key=`${iso}-${slot}`;
+  if(allData[singer][key])delete allData[singer][key];else allData[singer][key]=true;
+  save();renderWeek();
 }
 
-(async () => { await loadData(); renderWeek(); })();
+await load();
+renderWeek();
 </script>
 </body>
 </html>
