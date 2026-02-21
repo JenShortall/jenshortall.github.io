@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rehearsal Availability — Wedding Countdown</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --paper: #faf8f4;
+    --cream: #f0ece3;
+    --accent: #c9573a;
+    --accent-light: #fde8e4;
+    --gold: #d4a843;
+    --gold-light: #fdf6e0;
+    --sage: #6b8f71;
+    --sage-light: #e8f0e9;
+    --muted: #8a8070;
+    --border: #ddd8cc;
+    --wedding: #7b3fa0;
+    --wedding-light: #f3eaf9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
+
+  /* ── Header ── */
+  header {
+    background: var(--ink);
+    padding: 2rem 2rem 1.6rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,255,255,0.018) 20px,rgba(255,255,255,0.018) 21px);
+  }
+  header::after {
+    content: '♩ ♪ ♫ ♬ ♩ ♪ ♫ ♬ ♩ ♪ ♫ ♬';
+    position: absolute; bottom: 0.3rem; left: 0; right: 0;
+    text-align: center; font-size: 1rem;
+    color: rgba(255,255,255,0.055); letter-spacing: 0.5rem; pointer-events: none;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    color: var(--paper); font-weight: 900; letter-spacing: -0.02em; position: relative;
+  }
+  header p { color: rgba(255,255,255,0.48); margin-top: 0.3rem; font-size: 0.88rem; font-weight: 300; position: relative; }
+  .wedding-countdown {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--wedding); color: white;
+    border-radius: 20px; padding: 0.3rem 1rem;
+    font-size: 0.82rem; font-weight: 600; margin-top: 0.7rem;
+    position: relative; letter-spacing: 0.02em;
+  }
+
+  /* ── Tabs ── */
+  .tabs {
+    display: flex; background: var(--cream);
+    border-bottom: 2px solid var(--border); padding: 0 1.5rem;
+  }
+  .tab {
+    padding: 0.85rem 1.4rem; cursor: pointer;
+    font-size: 0.87rem; font-weight: 500; color: var(--muted);
+    border-bottom: 3px solid transparent; margin-bottom: -2px;
+    transition: all 0.18s; letter-spacing: 0.02em; white-space: nowrap;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+  /* ── Panels ── */
+  .panel { display: none; padding: 1.4rem; max-width: 900px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  /* ── Name entry ── */
+  .singer-entry {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 1.5rem; margin-bottom: 1.4rem;
+  }
+  .singer-entry h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 0.3rem; }
+  .singer-entry p { color: var(--muted); font-size: 0.84rem; margin-bottom: 1rem; }
+  .name-row { display: flex; gap: 0.7rem; align-items: center; }
+  .name-row input {
+    flex: 1; padding: 0.65rem 0.9rem;
+    border: 1.5px solid var(--border); border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.94rem;
+    background: var(--paper); color: var(--ink); outline: none;
+    transition: border-color 0.2s;
+  }
+  .name-row input:focus { border-color: var(--accent); }
+  .btn {
+    padding: 0.65rem 1.3rem; border: none; border-radius: 8px;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    font-size: 0.87rem; font-weight: 600; transition: all 0.15s; white-space: nowrap;
+  }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: #b04830; transform: translateY(-1px); }
+
+  .save-status { font-size: 0.74rem; color: var(--sage); font-style: italic; margin-top: 0.4rem; min-height: 1em; }
+
+  /* ── Singer banner ── */
+  .singer-banner {
+    display: none; align-items: center; gap: 0.8rem;
+    background: var(--sage-light); border: 1.5px solid var(--sage);
+    border-radius: 10px; padding: 0.75rem 1rem;
+    margin-bottom: 1.1rem; flex-wrap: wrap;
+  }
+  .singer-banner.visible { display: flex; }
+  .singer-banner .name-badge {
+    background: var(--sage); color: white; border-radius: 20px;
+    padding: 0.2rem 0.85rem; font-weight: 600; font-size: 0.86rem;
+  }
+  .singer-banner p { color: #3a5c3f; font-size: 0.83rem; flex: 1; min-width: 140px; }
+  .singer-banner .change-link {
+    color: var(--sage); cursor: pointer; font-size: 0.8rem; font-weight: 600; text-decoration: underline;
+  }
+
+  .instructions {
+    background: #fff8f0; border-left: 4px solid var(--gold);
+    border-radius: 0 8px 8px 0; padding: 0.75rem 1rem;
+    margin-bottom: 1.1rem; font-size: 0.83rem; color: #6b5a2a; line-height: 1.6;
+  }
+
+  /* ── Week navigator ── */
+  .week-nav {
+    display: flex; align-items: center; gap: 0.6rem;
+    margin-bottom: 1rem; flex-wrap: wrap;
+  }
+  .week-nav-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700; color: var(--ink); flex: 1;
+  }
+  .week-pills { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .week-pill {
+    padding: 0.35rem 0.9rem; border-radius: 20px; border: 1.5px solid var(--border);
+    background: white; font-size: 0.8rem; font-weight: 500; color: var(--muted);
+    cursor: pointer; transition: all 0.15s; white-space: nowrap;
+  }
+  .week-pill:hover { border-color: var(--accent); color: var(--ink); }
+  .week-pill.active { background: var(--accent); border-color: var(--accent); color: white; font-weight: 600; }
+  .week-arrow {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1.5px solid var(--border); background: white;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1rem; color: var(--muted);
+    transition: all 0.15s; flex-shrink: 0;
+  }
+  .week-arrow:hover { border-color: var(--accent); color: var(--accent); }
+  .week-arrow.disabled { opacity: 0.3; pointer-events: none; }
+
+  /* ── Week calendar ── */
+  .week-grid {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+  }
+  .week-row {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+  }
+  .week-header-row { background: var(--ink); }
+  .week-header-cell {
+    text-align: center; padding: 0.55rem 0.2rem;
+    font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.05em; color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+  }
+  .week-header-cell.is-weekend { color: rgba(255,255,255,0.28); }
+  .week-header-cell.has-date {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0.4rem 0.2rem 0.35rem; gap: 1px;
+  }
+  .week-header-cell .hdr-day { font-size: 0.68rem; opacity: 0.6; letter-spacing: 0.05em; text-transform: uppercase; }
+  .week-header-cell .hdr-date { font-size: 0.88rem; font-weight: 700; color: white; }
+  .week-header-cell.is-weekend .hdr-date { color: rgba(255,255,255,0.5); }
+
+  .day-cell {
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 0.35rem 0.3rem 0.3rem;
+    position: relative; min-width: 0;
+    background: white;
+  }
+  .week-row:last-child .day-cell { border-bottom: none; }
+  .day-cell:last-child { border-right: none; }
+  .day-cell.is-weekend { background: #fdfaf7; }
+  .day-cell.is-empty { background: var(--cream); opacity: 0.3; }
+  .day-cell.is-wedding {
+    background: var(--wedding-light);
+    border-color: #d0aae8;
+  }
+
+  /* ── Slot buttons ── */
+  .slots { display: flex; flex-direction: column; gap: 2px; }
+  .slot-btn {
+    display: flex; align-items: center; gap: 3px;
+    padding: 2px 4px; border-radius: 4px;
+    border: 1px solid transparent; cursor: pointer;
+    background: var(--cream); font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem; font-weight: 500; color: var(--muted);
+    line-height: 1.2; text-align: left; width: 100%;
+    transition: all 0.12s; user-select: none;
+    white-space: nowrap; overflow: hidden;
+  }
+  .slot-btn:hover:not(:disabled) { border-color: var(--border); color: var(--ink); }
+  .slot-btn.blocked { background: var(--accent-light); border-color: #e8b0a0; color: var(--accent); font-weight: 600; }
+  .slot-btn:disabled { cursor: default; }
+  .slot-icon { font-size: 0.68rem; flex-shrink: 0; }
+
+  /* Wedding cell content */
+  .wedding-cell-inner {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center;
+    padding: 0.5rem 0.2rem; gap: 3px; min-height: 80px;
+  }
+  .wedding-emoji { font-size: 1.4rem; }
+  .wedding-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.72rem; font-weight: 700; color: var(--wedding);
+    letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.2;
+  }
+  .wedding-date { font-size: 0.62rem; color: var(--wedding); opacity: 0.7; }
+
+  /* ── Overview bars ── */
+  .slot-bars { display: flex; flex-direction: column; gap: 2px; }
+  .slot-bar-row { display: flex; align-items: center; gap: 3px; font-size: 0.57rem; color: var(--muted); white-space: nowrap; }
+  .slot-bar-label { width: 12px; flex-shrink: 0; font-size: 0.63rem; }
+  .slot-bar-track { flex: 1; height: 6px; border-radius: 3px; background: var(--cream); overflow: hidden; min-width: 8px; }
+  .slot-bar-fill { height: 100%; border-radius: 3px; background: var(--sage); transition: width 0.3s; }
+  .slot-bar-fill.ok { background: var(--gold); }
+  .slot-bar-fill.low { background: var(--accent); }
+  .slot-count { font-size: 0.58rem; color: var(--muted); min-width: 16px; text-align: right; }
+
+  /* ── Overview panel ── */
+  .overview-header {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 1.3rem; margin-bottom: 1.1rem;
+  }
+  .overview-header h2 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.8rem; }
+  .singers-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .singer-chip {
+    display: flex; align-items: center; gap: 0.35rem;
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: 20px; padding: 0.22rem 0.65rem 0.22rem 0.45rem; font-size: 0.8rem;
+  }
+  .chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sage); }
+  .chip-remove { cursor: pointer; color: var(--muted); margin-left: 0.15rem; font-size: 0.88rem; }
+  .chip-remove:hover { color: var(--accent); }
+  .no-singers { color: var(--muted); font-size: 0.86rem; font-style: italic; }
+
+  .legend {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    margin-bottom: 0.9rem; font-size: 0.78rem; color: var(--muted); align-items: center;
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.3rem; }
+  .legend-swatch { width: 13px; height: 6px; border-radius: 3px; }
+  .sw-great { background: var(--sage); }
+  .sw-ok { background: var(--gold); }
+  .sw-low { background: var(--accent); }
+
+  .best-days {
+    background: var(--sage-light); border: 1.5px solid var(--sage);
+    border-radius: 10px; padding: 0.9rem 1.1rem; margin-top: 1.2rem; font-size: 0.86rem;
+  }
+  .best-days h3 { font-weight: 600; margin-bottom: 0.4rem; color: #3a5c3f; }
+  .best-days p { color: #4a6c4f; line-height: 1.8; }
+  .best-slot-tag {
+    display: inline-flex; align-items: center; gap: 3px;
+    background: var(--sage); color: white; border-radius: 5px;
+    padding: 0.1rem 0.5rem; font-size: 0.78rem; font-weight: 600; margin: 0.1rem;
+  }
+
+  /* ── Tooltip ── */
+  .tooltip-wrap { position: relative; }
+  .tooltip-content {
+    display: none; position: absolute; bottom: calc(100% + 5px); left: 50%;
+    transform: translateX(-50%); background: var(--ink); color: white;
+    border-radius: 6px; padding: 0.45rem 0.65rem; font-size: 0.73rem;
+    white-space: pre; z-index: 300; pointer-events: none; line-height: 1.6;
+    min-width: 145px; text-align: left; box-shadow: 0 4px 16px rgba(0,0,0,0.28);
+  }
+  .tooltip-wrap:hover .tooltip-content { display: block; }
+
+  @media (max-width: 600px) {
+    .panel { padding: 0.7rem; }
+    .slot-btn { font-size: 0.52rem; padding: 1px 2px; }
+    .slot-icon { display: none; }
+    .week-header-cell .hdr-date { font-size: 0.78rem; }
+    .week-pill { padding: 0.28rem 0.65rem; font-size: 0.74rem; }
+    .tab { padding: 0.7rem 0.85rem; font-size: 0.8rem; }
+    .wedding-emoji { font-size: 1.1rem; }
+    .wedding-label { font-size: 0.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Rehearsal Availability</h1>
+  <p>Mark when you <em>can't</em> make it — 2 March to 2 April</p>
+  <div class="wedding-countdown">💍 THE WEDDING — Thursday 3 April</div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('singer')">🎵 My Availability</div>
+  <div class="tab" onclick="switchTab('overview')">📊 Organiser Overview</div>
+</div>
+
+<!-- SINGER PANEL -->
+<div class="panel active" id="panel-singer">
+
+  <div class="singer-entry" id="name-entry-box">
+    <h2>Who are you?</h2>
+    <p>Enter your name so we can track your availability separately from everyone else's.</p>
+    <div class="name-row">
+      <input type="text" id="name-input" placeholder="Your name…" maxlength="40"
+             onkeydown="if(event.key==='Enter') setName()">
+      <button class="btn btn-primary" onclick="setName()">Let's go →</button>
+    </div>
+    <div class="save-status" id="save-status"></div>
+  </div>
+
+  <div class="singer-banner" id="singer-banner">
+    <span class="name-badge" id="banner-name"></span>
+    <p>Tap any slot to block it red (can't make it). Tap again to clear.</p>
+    <span class="change-link" onclick="changeName()">Change name</span>
+  </div>
+
+  <div class="instructions" id="instructions" style="display:none">
+    <strong>How to use:</strong> Each day has three slots — <strong>🌅 Morning</strong> (before noon), <strong>☀️ Afternoon</strong> (12–5pm), <strong>🌙 Evening</strong> (5pm+). Click any slot you <strong>cannot</strong> attend to turn it red. Click again to clear it. Flip between weeks using the buttons below. Changes save automatically.
+  </div>
+
+  <div id="singer-week-ui"></div>
+</div>
+
+<!-- OVERVIEW PANEL -->
+<div class="panel" id="panel-overview">
+
+  <div class="overview-header">
+    <h2>Singers who've responded</h2>
+    <div class="singers-list" id="singers-list"></div>
+  </div>
+
+  <div class="legend">
+    <span style="font-weight:600;color:var(--ink);margin-right:0.2rem">Bar fill = free singers:</span>
+    <span class="legend-item"><span class="legend-swatch sw-great"></span> All free</span>
+    <span class="legend-item"><span class="legend-swatch sw-ok"></span> Most free</span>
+    <span class="legend-item"><span class="legend-swatch sw-low"></span> Many blocked</span>
+  </div>
+
+  <div id="overview-week-ui"></div>
+
+  <div class="best-days">
+    <h3>✨ Best rehearsal slots</h3>
+    <p id="best-days-text">Add responses to see recommendations.</p>
+  </div>
+
+</div>
+
+<script>
+// ── Date range setup ──────────────────────────────────────────────────────────
+// Range: Mon 2 Mar 2026 → Thu 2 Apr 2026 (+ 3 Apr = THE WEDDING, display only)
+// We define exactly 5 weeks as Mon–Sun rows:
+// Week 1: Mon 2 Mar  – Sun 8 Mar
+// Week 2: Mon 9 Mar  – Sun 15 Mar
+// Week 3: Mon 16 Mar – Sun 22 Mar
+// Week 4: Mon 23 Mar – Sun 29 Mar
+// Week 5: Mon 30 Mar – Sun 5 Apr  (includes Thu 3 Apr = wedding, Sun 5 Apr = out of range but shown empty)
+
+const WEEKS = [
+  { label: 'Week 1', dates: makeDateRange('2026-03-02', '2026-03-08') },
+  { label: 'Week 2', dates: makeDateRange('2026-03-09', '2026-03-15') },
+  { label: 'Week 3', dates: makeDateRange('2026-03-16', '2026-03-22') },
+  { label: 'Week 4', dates: makeDateRange('2026-03-23', '2026-03-29') },
+  { label: 'Week 5', dates: makeDateRange('2026-03-30', '2026-04-05') },
+];
+
+const RANGE_START = '2026-03-02';
+const RANGE_END   = '2026-04-02';
+const WEDDING_DATE = '2026-04-03';
+
+const SLOTS = ['m','a','e'];
+const SLOT_LABELS = { m:'Morning', a:'Afternoon', e:'Evening' };
+const SLOT_ICONS  = { m:'🌅', a:'☀️', e:'🌙' };
+const DAY_SHORT   = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const STORAGE_KEY = 'choir-wedding-2026-v1';
+
+let currentSinger = null;
+let allData = {};
+let singerWeek = 0;
+let overviewWeek = 0;
+
+function makeDateRange(start, end) {
+  const arr = [];
+  let d = new Date(start + 'T00:00:00');
+  const e = new Date(end + 'T00:00:00');
+  while (d <= e) {
+    arr.push(toISO(d));
+    d.setDate(d.getDate() + 1);
+  }
+  return arr;
+}
+
+function toISO(d) {
+  return d.toISOString().slice(0, 10);
+}
+
+function parseDate(iso) {
+  const [y, m, day] = iso.split('-').map(Number);
+  return new Date(y, m - 1, day);
+}
+
+function isInRange(iso) {
+  return iso >= RANGE_START && iso <= RANGE_END;
+}
+
+// ── Storage ───────────────────────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const r = await window.storage.get(STORAGE_KEY, true);
+    if (r && r.value) allData = JSON.parse(r.value);
+  } catch(e) { allData = {}; }
+}
+
+async function saveData() {
+  try {
+    await window.storage.set(STORAGE_KEY, JSON.stringify(allData), true);
+    flashSave();
+  } catch(e) { console.error('Save failed', e); }
+}
+
+function flashSave() {
+  const el = document.getElementById('save-status');
+  if (!el) return;
+  el.textContent = '✓ Saved';
+  setTimeout(() => el.textContent = '', 2000);
+}
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t, i) =>
+    t.classList.toggle('active', (i===0&&tab==='singer')||(i===1&&tab==='overview')));
+  document.getElementById('panel-singer').classList.toggle('active', tab==='singer');
+  document.getElementById('panel-overview').classList.toggle('active', tab==='overview');
+  if (tab === 'overview') renderOverview();
+}
+
+// ── Name ──────────────────────────────────────────────────────────────────────
+function setName() {
+  const input = document.getElementById('name-input');
+  const name = input.value.trim();
+  if (!name) { input.focus(); return; }
+  currentSinger = name;
+  if (!allData[name]) allData[name] = {};
+  document.getElementById('name-entry-box').style.display = 'none';
+  document.getElementById('instructions').style.display = 'block';
+  document.getElementById('singer-banner').classList.add('visible');
+  document.getElementById('banner-name').textContent = name;
+  renderSingerWeek();
+  saveData();
+}
+
+function changeName() {
+  currentSinger = null;
+  document.getElementById('name-entry-box').style.display = 'block';
+  document.getElementById('instructions').style.display = 'none';
+  document.getElementById('singer-banner').classList.remove('visible');
+  document.getElementById('name-input').value = '';
+  document.getElementById('name-input').focus();
+  renderSingerWeek();
+}
+
+// ── Week navigation UI ────────────────────────────────────────────────────────
+function buildWeekNav(current, onSelect, container) {
+  const nav = document.createElement('div');
+  nav.className = 'week-nav';
+
+  const left = document.createElement('div');
+  left.className = 'week-arrow' + (current === 0 ? ' disabled' : '');
+  left.textContent = '←';
+  left.onclick = () => onSelect(current - 1);
+
+  const pills = document.createElement('div');
+  pills.className = 'week-pills';
+  WEEKS.forEach((w, i) => {
+    const pill = document.createElement('div');
+    pill.className = 'week-pill' + (i === current ? ' active' : '');
+    // Show date range in pill
+    const dates = w.dates;
+    const first = parseDate(dates[0]);
+    const last  = parseDate(dates[dates.length - 1]);
+    pill.textContent = `${first.getDate()} ${MONTH_SHORT[first.getMonth()]}–${last.getDate()} ${MONTH_SHORT[last.getMonth()]}`;
+    pill.title = w.label;
+    pill.onclick = () => onSelect(i);
+    pills.appendChild(pill);
+  });
+
+  const right = document.createElement('div');
+  right.className = 'week-arrow' + (current === WEEKS.length - 1 ? ' disabled' : '');
+  right.textContent = '→';
+  right.onclick = () => onSelect(current + 1);
+
+  nav.appendChild(left);
+  nav.appendChild(pills);
+  nav.appendChild(right);
+  container.appendChild(nav);
+}
+
+// ── Build a week grid ─────────────────────────────────────────────────────────
+function buildWeekGrid(weekIdx, cellFn) {
+  const week = WEEKS[weekIdx];
+  const wrap = document.createElement('div');
+  wrap.className = 'week-grid';
+
+  // Header row
+  const hdrRow = document.createElement('div');
+  hdrRow.className = 'week-row week-header-row';
+  week.dates.forEach(iso => {
+    const d = parseDate(iso);
+    const dow = d.getDay(); // 0=Sun,6=Sat
+    const isWeekend = dow === 0 || dow === 6;
+    const dayIdx = (dow + 6) % 7; // Mon=0..Sun=6
+    const hdr = document.createElement('div');
+    hdr.className = 'week-header-cell has-date' + (isWeekend ? ' is-weekend' : '');
+    hdr.innerHTML = `<span class="hdr-day">${DAY_SHORT[dayIdx]}</span><span class="hdr-date">${d.getDate()} ${MONTH_SHORT[d.getMonth()]}</span>`;
+    hdrRow.appendChild(hdr);
+  });
+  wrap.appendChild(hdrRow);
+
+  // Single body row
+  const bodyRow = document.createElement('div');
+  bodyRow.className = 'week-row';
+  week.dates.forEach(iso => {
+    const d = parseDate(iso);
+    const dow = d.getDay();
+    const isWeekend = dow === 0 || dow === 6;
+    const isWedding = iso === WEDDING_DATE;
+    const outOfRange = !isInRange(iso) && !isWedding;
+
+    const cell = document.createElement('div');
+    cell.className = 'day-cell' +
+      (isWeekend ? ' is-weekend' : '') +
+      (isWedding ? ' is-wedding' : '') +
+      (outOfRange ? ' is-empty' : '');
+
+    cellFn(cell, iso, isWedding, outOfRange);
+    bodyRow.appendChild(cell);
+  });
+  wrap.appendChild(bodyRow);
+
+  return wrap;
+}
+
+// ── Singer calendar ───────────────────────────────────────────────────────────
+function renderSingerWeek() {
+  const container = document.getElementById('singer-week-ui');
+  container.innerHTML = '';
+
+  buildWeekNav(singerWeek, (i) => { singerWeek = i; renderSingerWeek(); }, container);
+
+  const blocked = currentSinger ? (allData[currentSinger] || {}) : {};
+
+  const grid = buildWeekGrid(singerWeek, (cell, iso, isWedding, outOfRange) => {
+    if (isWedding) {
+      cell.innerHTML = `<div class="wedding-cell-inner"><span class="wedding-emoji">💍</span><span class="wedding-label">The Wedding!</span><span class="wedding-date">Thu 3 Apr</span></div>`;
+      return;
+    }
+    if (outOfRange) return;
+
+    const slotsEl = document.createElement('div');
+    slotsEl.className = 'slots';
+    SLOTS.forEach(s => {
+      const key = `${iso}-${s}`;
+      const isBlocked = !!blocked[key];
+      const btn = document.createElement('button');
+      btn.className = 'slot-btn' + (isBlocked ? ' blocked' : '');
+      btn.innerHTML = `<span class="slot-icon">${SLOT_ICONS[s]}</span>${SLOT_LABELS[s]}`;
+      if (currentSinger) {
+        btn.onclick = () => toggleSlot(iso, s);
+      } else {
+        btn.disabled = true;
+      }
+      slotsEl.appendChild(btn);
+    });
+    cell.appendChild(slotsEl);
+  });
+
+  container.appendChild(grid);
+}
+
+function toggleSlot(iso, slot) {
+  if (!currentSinger) return;
+  if (!allData[currentSinger]) allData[currentSinger] = {};
+  const key = `${iso}-${slot}`;
+  if (allData[currentSinger][key]) delete allData[currentSinger][key];
+  else allData[currentSinger][key] = true;
+  saveData();
+  renderSingerWeek();
+}
+
+// ── Overview ──────────────────────────────────────────────────────────────────
+function renderOverview() {
+  renderSingerChips();
+  renderOverviewWeek();
+  renderBestSlots();
+}
+
+function renderSingerChips() {
+  const container = document.getElementById('singers-list');
+  const names = Object.keys(allData);
+  if (!names.length) {
+    container.innerHTML = '<span class="no-singers">No singers have responded yet.</span>';
+    return;
+  }
+  container.innerHTML = names.map(name => `
+    <div class="singer-chip">
+      <span class="chip-dot"></span>${esc(name)}
+      <span class="chip-remove" onclick="removeSinger(${JSON.stringify(name)})">&times;</span>
+    </div>`).join('');
+}
+
+function removeSinger(name) {
+  if (!confirm(`Remove ${name}'s responses?`)) return;
+  delete allData[name];
+  saveData();
+  renderOverview();
+}
+
+function renderOverviewWeek() {
+  const container = document.getElementById('overview-week-ui');
+  container.innerHTML = '';
+  const singers = Object.keys(allData);
+  const total = singers.length;
+
+  buildWeekNav(overviewWeek, (i) => { overviewWeek = i; renderOverviewWeek(); renderBestSlots(); }, container);
+
+  const grid = buildWeekGrid(overviewWeek, (cell, iso, isWedding, outOfRange) => {
+    if (isWedding) {
+      cell.innerHTML = `<div class="wedding-cell-inner"><span class="wedding-emoji">💍</span><span class="wedding-label">The Wedding!</span><span class="wedding-date">Thu 3 Apr</span></div>`;
+      return;
+    }
+    if (outOfRange) return;
+
+    cell.classList.add('tooltip-wrap');
+    const barsEl = document.createElement('div');
+    barsEl.className = 'slot-bars';
+
+    const d = parseDate(iso);
+    const dow = d.getDay();
+    const dayIdx = (dow + 6) % 7;
+    let tipLines = [`${DAY_SHORT[dayIdx]} ${d.getDate()} ${MONTH_SHORT[d.getMonth()]}`];
+
+    SLOTS.forEach(s => {
+      const key = `${iso}-${s}`;
+      const blockedBy = singers.filter(n => allData[n][key]);
+      const freeCount = total - blockedBy.length;
+      const pct = total > 0 ? freeCount / total : 0;
+      const fillPct = Math.round(pct * 100);
+      const fillClass = total === 0 ? '' : pct >= 0.85 ? '' : pct >= 0.6 ? 'ok' : 'low';
+
+      const row = document.createElement('div');
+      row.className = 'slot-bar-row';
+      row.innerHTML = `
+        <span class="slot-bar-label">${SLOT_ICONS[s]}</span>
+        <span class="slot-bar-track"><span class="slot-bar-fill ${fillClass}" style="width:${fillPct}%"></span></span>
+        ${total > 0 ? `<span class="slot-count">${freeCount}/${total}</span>` : ''}
+      `;
+      barsEl.appendChild(row);
+
+      if (total > 0) {
+        const freeNames = singers.filter(n => !allData[n][key]);
+        tipLines.push(`${SLOT_ICONS[s]} ${SLOT_LABELS[s]}: ${freeCount}/${total} free` +
+          (blockedBy.length ? `\n  ❌ ${blockedBy.join(', ')}` : '\n  ✅ All free'));
+      }
+    });
+
+    if (total === 0) tipLines.push('No responses yet');
+
+    cell.appendChild(barsEl);
+    const tip = document.createElement('div');
+    tip.className = 'tooltip-content';
+    tip.textContent = tipLines.join('\n');
+    cell.appendChild(tip);
+  });
+
+  container.appendChild(grid);
+}
+
+function renderBestSlots() {
+  const singers = Object.keys(allData);
+  const total = singers.length;
+  const el = document.getElementById('best-days-text');
+  if (!total) { el.textContent = 'Add responses to see recommendations.'; return; }
+
+  const scores = [];
+  WEEKS.forEach(w => {
+    w.dates.forEach(iso => {
+      if (!isInRange(iso)) return;
+      const d = parseDate(iso);
+      const dow = d.getDay();
+      const dayIdx = (dow + 6) % 7;
+      SLOTS.forEach(s => {
+        const key = `${iso}-${s}`;
+        const free = singers.filter(n => !allData[n][key]).length;
+        scores.push({ iso, s, dayIdx, d, free, total, pct: free / total });
+      });
+    });
+  });
+
+  const perfect = scores.filter(x => x.free === x.total);
+  const great   = scores.filter(x => x.pct >= 0.8 && x.free < x.total);
+
+  const fmt = x => {
+    const d = x.d;
+    return `<span class="best-slot-tag">${SLOT_ICONS[x.s]} ${DAY_SHORT[x.dayIdx]} ${d.getDate()} ${MONTH_SHORT[d.getMonth()]} · ${SLOT_LABELS[x.s]}</span>`;
+  };
+
+  let html = '';
+  if (perfect.length) html += `<strong>Everyone free:</strong><br>${perfect.map(fmt).join(' ')}`;
+  if (great.length)   html += (html ? '<br><br>' : '') + `<strong>Almost everyone (≥80%):</strong><br>${great.map(fmt).join(' ')}`;
+  if (!html) {
+    const top = [...scores].sort((a, b) => b.free - a.free).slice(0, 6);
+    html = `<strong>Best available slots:</strong><br>${top.map(x => `${fmt(x)} <small>(${x.free}/${x.total})</small>`).join(' ')}`;
+  }
+  el.innerHTML = html;
+}
+
+function esc(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+(async () => {
+  await loadData();
+  renderSingerWeek();
+})();
+</script>
+</body>
+</html>
