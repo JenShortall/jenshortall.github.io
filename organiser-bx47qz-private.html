@@ -194,6 +194,60 @@ async function load(){
 
 window.refresh=async function(){await load();renderAll();};
 
+window.exportCSV=function(){
+  const names=Object.keys(allData);
+  if(!names.length){alert('No responses yet.');return;}
+
+  // Collect all dates in range
+  const allDates=[];
+  WEEKS.forEach(w=>w.dates.forEach(iso=>{if(inRange(iso))allDates.push(iso);}));
+
+  // Build header row: Name, Eircode, then one column per date+slot
+  const headers=['Name','Eircode'];
+  allDates.forEach(iso=>{
+    const d=pd(iso),dow=gw(d),di=(dow+6)%7;
+    const label=`${DSHORT[di]} ${gd(d)} ${MSHORT[gm(d)]}`;
+    SLOTS.forEach(s=>headers.push(`${label} ${SLABEL[s]}`));
+  });
+
+  const rows=[headers];
+
+  names.forEach(name=>{
+    const data=allData[name]||{};
+    const row=[name, data._eircode||''];
+    allDates.forEach(iso=>{
+      SLOTS.forEach(s=>{
+        const key=`${iso}-${s}`;
+        row.push(data[key]?'UNAVAILABLE':'free');
+      });
+    });
+    rows.push(row);
+  });
+
+  // Also add a summary row showing free count per slot
+  const summaryRow=['TOTAL FREE',''];
+  allDates.forEach(iso=>{
+    SLOTS.forEach(s=>{
+      const key=`${iso}-${s}`;
+      const free=names.filter(n=>!allData[n][key]).length;
+      summaryRow.push(`${free}/${names.length}`);
+    });
+  });
+  rows.push(summaryRow);
+
+  // Convert to CSV string
+  const csv=rows.map(row=>row.map(cell=>`"${String(cell).replace(/"/g,'""')}"`).join(',')).join('\n');
+
+  // Trigger download
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=`rehearsal-availability-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
 function renderAll(){renderChips();renderOverviewWeek();renderBestSlots();}
 
 function renderChips(){
