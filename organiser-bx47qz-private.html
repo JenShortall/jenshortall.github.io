@@ -137,7 +137,7 @@
     <span class="legend-item"><span class="legend-swatch" style="background:#d4a843"></span> Most free</span>
     <span class="legend-item"><span class="legend-swatch" style="background:#c9573a"></span> Many blocked</span>
   </div>
-  
+
   <div id="overview-week-ui"><div class="loading">Loading…</div></div>
 
   <div class="best-days">
@@ -316,9 +316,10 @@ function renderOverviewWeek(){
     SLOTS.forEach(s=>{
       const key=`${iso}-${s}`,blockedBy=singers.filter(n=>allData[n][key]);
       const free=total-blockedBy.length,pct=total>0?free/total:0;
-      const fp=Math.round(pct*100),fc=total===0?'':pct>=0.85?'':pct>=0.6?'ok':'low';
+     const fp=Math.round(pct*100);
+      const fillColor=total===0?"#ddd8cc":pct>=0.85?"#6b8f71":pct>=0.6?"#d4a843":"#c9573a";
       const row=document.createElement('div');row.className='slot-bar-row';
-      row.innerHTML=`<span class="slot-bar-label">${SICON[s]}</span><span class="slot-bar-track"><span class="slot-bar-fill ${fc}" style="width:${fp}%"></span></span>${total>0?`<span class="slot-count">${free}/${total}</span>`:''}`;
+      row.innerHTML=`<span class="slot-bar-label">${SICON[s]}</span><span class="slot-bar-track"><span class="slot-bar-fill" style="width:${fp}%;background:${fillColor}"></span></span>${total>0?`<span class="slot-count">${free}/${total}</span>`:''}`;
       bars.appendChild(row);
       if(total>0)tip.push(`${SICON[s]} ${SLABEL[s]}: ${free}/${total} free`+(blockedBy.length?`\n  ❌ ${blockedBy.join(', ')}`:'\n  ✅ All free'));
     });
