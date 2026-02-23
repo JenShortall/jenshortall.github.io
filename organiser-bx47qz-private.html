@@ -84,8 +84,8 @@
   .slot-bars { display:flex; flex-direction:column; gap:2px; }
   .slot-bar-row { display:flex; align-items:center; gap:3px; font-size:0.57rem; color:var(--muted); white-space:nowrap; }
   .slot-bar-label { width:12px; flex-shrink:0; font-size:0.63rem; }
-  .slot-bar-track { flex:1; height:6px; border-radius:3px; background:#f0ece3; overflow:hidden; min-width:8px; width:100%; }
-  .slot-bar-fill { height:100%; border-radius:3px; background:#6b8f71; transition:width 0.3s; }
+  .slot-bar-track { display:block; flex:1; height:6px; border-radius:3px; background:#f0ece3; overflow:hidden; min-width:8px; width:100%; }
+  .slot-bar-fill { display:block; height:6px; border-radius:3px; background:#6b8f71; transition:width 0.3s; }; 
   .slot-bar-fill.ok { background:var(--gold); }
   .slot-bar-fill.low { background:var(--accent); }
   .slot-count { font-size:0.58rem; color:var(--muted); min-width:16px; text-align:right; }
